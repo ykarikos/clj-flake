@@ -8,7 +8,7 @@
   [len]
   [:fwd len :left 180 :fwd len])
 
-(defn- arrow
+(defn- arrow-start
   [len]
   (let [fifth (/ len 5)
         tenth (/ len 10)]
@@ -33,12 +33,16 @@
      :left angle-c :fwd sector-len
      :right angle-d :fwd len]))
 
+(defn- arrow
+  [len]
+  (concat
+   (arrow-start len)
+   [:fwd (* len 7/10)
+    :right (* 2 base-angle)]))
+  
 (defn simple-flake
   [len]
-  (let [single-arrow (concat
-                      (arrow len)
-                      [:fwd (* len 7/10)
-                       :right (* 2 base-angle)])
+  (let [single-arrow (arrow len)
         cycle-len (* 6 (count single-arrow))]
     (take cycle-len (cycle single-arrow))))
 
@@ -46,12 +50,40 @@
   [len star-len angle]
   (let [star-gap (- len star-len (* len 3/10))
         single-part (concat
-                     (arrow len)
+                     (arrow-start len)
                      [:fwd star-gap]
                      (sector angle star-len)
                      [:right base-angle])
         cycle-len (* 6 (count single-part))]
     (take cycle-len (cycle single-part))))
+
+(defn complex-flake
+  [len star-len angle]
+  (let [flake (flake len star-len angle)
+        small-arrow (arrow (* len 2/3))
+        cycle-len (* 6 (count small-arrow))
+        extra-arrows (take cycle-len (cycle small-arrow))]
+    (concat flake
+            [:right (/ base-angle 2)]
+            extra-arrows)))
+
+
+(defn goto-random
+  [min-distance max-distance]
+  (let [distance (+ min-distance (rand-int (- max-distance min-distance)))
+        angle (rand-int 360)]
+    [:pen :up
+     :right angle
+     :fwd distance
+     :pen :down]))
+
+(defn scenery
+  []
+  (concat
+   [:color :blue :right (rand-int 360)]
+   (flake 500 280 30)
+   (goto-random 600 1500)
+   (simple-flake 150)))
 
 (defn draw-svg [filename commands]
   (spit filename (draw! ->svg commands [200 200])))
