@@ -58,3 +58,7 @@
 (defn draw-svg [filename commands]
   (spit filename (draw! ->svg commands [1200 800])))
 
+
+(defn -main
+  [& [filename]]
+  (draw-svg filename (scenery)))
