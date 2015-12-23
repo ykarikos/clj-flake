@@ -1,6 +1,6 @@
-(ns clj-turtle.core-test
+(ns clj-flake.core-test
   (:require [clojure.test :refer :all]
-            [clj-turtle.core :refer :all]))
+            [clj-flake.core :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."

@@ -1,7 +1,7 @@
-(ns clj-turtle.core
+(ns clj-flake.core
   (:require [turtle.core :refer [draw!]]
             [turtle.renderer.vector :refer [->svg]]
-            [clj-turtle.flake :refer :all]))
+            [clj-flake.flake :refer :all]))
 
 (defn- rand-range
   [min max]

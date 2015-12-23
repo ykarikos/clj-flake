@@ -1,14 +1,13 @@
-# clj-turtle
+# clj-flake
 
-A Clojure library designed to ... well, that part is up to you.
-
-## Usage
-
-FIXME
+Create snowflakes with Clojure
 
 ## License
 
-Copyright © 2015 FIXME
+Clj-flake (C) 2015 Yrjö Kari-Koskinen ykk@peruna.fi
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Clj-flake's source code is licensed with the MIT License, see [LICENSE.txt](https://github.com/ykarikos/clj-flake/blob/master/LICENSE.txt).
+
+# Thanks
+
+This project is a grateful recipient of the [Futurice Open Source sponsorship program](http://futurice.com/blog/sponsoring-free-time-open-source-activities?utm_source=github&utm_medium=spice).

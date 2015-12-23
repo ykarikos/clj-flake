@@ -1,4 +1,4 @@
-(ns clj-turtle.flake)
+(ns clj-flake.flake)
 
 (def base-angle 60)
 
