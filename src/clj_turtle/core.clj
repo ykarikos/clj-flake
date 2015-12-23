@@ -2,6 +2,8 @@
   (:require [turtle.core :refer [draw!]]
             [turtle.renderer.vector :refer [->svg]]))
 
+(def base-angle 60)
+
 (defn- there-and-back
   [len]
   [:fwd len :left 180 :fwd len])
@@ -23,7 +25,7 @@
 
 (defn- sector
   [angle len]
-  (let [angle-b (- 60 angle)
+  (let [angle-b (- base-angle angle)
         angle-c (- 120 (* 2 angle))
         angle-d (- 180 angle)
         sector-len (/ (/ len 2) (Math/cos (Math/toRadians angle-b)))]
@@ -31,14 +33,23 @@
      :left angle-c :fwd sector-len
      :right angle-d :fwd len]))
 
+(defn simple-flake
+  [len]
+  (let [single-arrow (concat
+                      (arrow len)
+                      [:fwd (* len 7/10)
+                       :right (* 2 base-angle)])
+        cycle-len (* 6 (count single-arrow))]
+    (take cycle-len (cycle single-arrow))))
+
 (defn flake
   [len star-len angle]
-  (let [star-gap (- len star-len (* (/ len 10) 3))
+  (let [star-gap (- len star-len (* len 3/10))
         single-part (concat
                      (arrow len)
                      [:fwd star-gap]
                      (sector angle star-len)
-                     [:right 60])
+                     [:right base-angle])
         cycle-len (* 6 (count single-part))]
     (take cycle-len (cycle single-part))))
 
