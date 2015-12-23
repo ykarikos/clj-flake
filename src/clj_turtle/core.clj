@@ -31,18 +31,17 @@
      :left angle-c :fwd sector-len
      :right angle-d :fwd len]))
 
-(defn draw-flake [filename len star-len angle]
+(defn flake
+  [len star-len angle]
   (let [star-gap (- len star-len (* (/ len 10) 3))
         single-part (concat
                      (arrow len)
                      [:fwd star-gap]
                      (sector angle star-len)
                      [:right 60])
-        cycle-len (* 6 (count single-part))
-        flake (take cycle-len (cycle single-part))]
-    (spit filename (draw! ->svg flake [800 600]))))
+        cycle-len (* 6 (count single-part))]
+    (take cycle-len (cycle single-part))))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defn draw-svg [filename commands]
+  (spit filename (draw! ->svg commands [200 200])))
+
