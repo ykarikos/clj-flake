@@ -1,18 +1,18 @@
-# clj-flake
+# cljs-flake
 
-Create snowflakes with Clojure
+Create snowflakes with ClojureScript
 
-## Running
+## Compiling
 
 ```
-$ lein run filename.svg
+$ lein cljsbuild once
 ```
 
 ## License
 
-Clj-flake (C) 2015 Yrjö Kari-Koskinen ykk@peruna.fi
+Cljs-flake (C) 2015 Yrjö Kari-Koskinen ykk@peruna.fi
 
-Clj-flake's source code is licensed with the MIT License, see [LICENSE.txt](https://github.com/ykarikos/clj-flake/blob/master/LICENSE.txt).
+Cljs-flake's source code is licensed with the MIT License, see [LICENSE.txt](https://github.com/ykarikos/clj-flake/blob/master/LICENSE.txt).
 
 ## Thanks
 

@@ -1,4 +1,4 @@
-(ns clj-flake.flake)
+(ns cljs-flake.flake)
 
 (def base-angle 60)
 
@@ -21,12 +21,17 @@
      (there-and-back fifth)
      [:right 40])))
 
+(defn- cos
+  [deg]
+  (let [rad (* (/ deg 180) (aget js/Math "PI"))]
+  (.sin js/Math rad)))
+
 (defn- sector
   [angle len]
   (let [angle-b (- base-angle angle)
         angle-c (- 120 (* 2 angle))
         angle-d (- 180 angle)
-        sector-len (/ (/ len 2) (Math/cos (Math/toRadians angle-b)))]
+        sector-len (/ (/ len 2) (cos angle-b))]
     [:left angle :fwd sector-len
      :left angle-c :fwd sector-len
      :right angle-d :fwd len]))
@@ -35,7 +40,7 @@
   [len]
   (concat
    (arrow-start len)
-   [:fwd (* len 7/10)
+   [:fwd (/ (* len 7) 10)
     :right (* 2 base-angle)]))
   
 (defn simple-flake
@@ -46,7 +51,7 @@
 
 (defn flake
   [len star-len angle]
-  (let [star-gap (- len star-len (* len 3/10))
+  (let [star-gap (- len star-len (/ (* len 3) 10))
         single-part (concat
                      (arrow-start len)
                      [:fwd star-gap]
@@ -58,7 +63,7 @@
 (defn complex-flake
   [len star-len angle]
   (let [flake (flake len star-len angle)
-        small-arrow (arrow (* len 2/3))
+        small-arrow (arrow (/ (* len 2) 3))
         cycle-len (* 6 (count small-arrow))
         extra-arrows (take cycle-len (cycle small-arrow))]
     (concat flake

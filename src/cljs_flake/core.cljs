@@ -1,7 +1,7 @@
-(ns clj-flake.core
-  (:require [turtle.core :refer [draw!]]
-            [turtle.renderer.vector :refer [->svg]]
-            [clj-flake.flake :refer :all]))
+(ns cljs-flake.core
+  (:use [turtle.core :only [draw!]]
+        [turtle.renderer.canvas :only [->canvas]])
+  (:require [cljs-flake.flake :as flake]))
 
 (defn- rand-range
   [min max]
@@ -26,17 +26,17 @@
   []
   (concat
    [:right (rand-int 360)]
-   (rand-flake flake)
+   (rand-flake flake/flake)
    (goto-random 1000 2500)
-   (simple-flake (rand-range 100 200))
+   (flake/simple-flake (rand-range 100 200))
    (goto-random 1200 2000)
-   (rand-flake complex-flake)
+   (rand-flake flake/complex-flake)
    (goto-random 2200 3500)))
 
 (defn simple-flakes
   []
   (concat
-   (simple-flake (rand-range 50 150))
+   (flake/simple-flake (rand-range 50 150))
    (goto-random 800 3000)))
 
 (defn combo2
@@ -55,10 +55,11 @@
         (repeatedly 13)
         (apply concat))))
 
-(defn draw-svg [filename commands]
-  (spit filename (draw! ->svg commands [1200 800])))
+(def canvas (js/document.getElementById "canvas"))
 
+(def ctx (.getContext canvas "2d"))
 
-(defn -main
-  [& [filename]]
-  (draw-svg filename (scenery)))
+(set! (.-width canvas) 3000)
+(set! (.-height canvas) 2000)
+
+(draw! (->canvas ctx) (flake/simple-flake 100))
