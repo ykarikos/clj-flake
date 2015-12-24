@@ -23,15 +23,15 @@
 
 (defn- cos
   [deg]
-  (let [rad (* (/ deg 180) (aget js/Math "PI"))]
-  (.sin js/Math rad)))
+  (let [rad (* (/ deg 180.0) (aget js/Math "PI"))]
+    (.cos js/Math rad)))
 
 (defn- sector
   [angle len]
   (let [angle-b (- base-angle angle)
-        angle-c (- 120 (* 2 angle))
+        angle-c (- 120 (* 2.0 angle))
         angle-d (- 180 angle)
-        sector-len (/ (/ len 2) (cos angle-b))]
+        sector-len (/ (/ len 2.0) (cos angle-b))]
     [:left angle :fwd sector-len
      :left angle-c :fwd sector-len
      :right angle-d :fwd len]))
