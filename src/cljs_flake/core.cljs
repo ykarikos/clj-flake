@@ -3,23 +3,28 @@
         [turtle.renderer.canvas :only [->canvas]])
   (:require [cljs-flake.flake :as flake]))
 
+(def max-width 8000)
+(def max-height 6000)
+
 (defn- rand-range
   [min max]
   (+ min (rand-int (- max min))))
 
 (defn rand-flake
   [flake]
-  (let [len (rand-range 300 600)
-        star-len (+ (/ len 2) (rand-range 30 (/ len 3)))]
+  (let [len (rand-range 100 600)
+        star-len (+ (/ len 3) (rand-range 30 (/ len 3)))]
    (flake len star-len (rand-range 20 45))))
 
 (defn goto-random
-  [min-distance max-distance]
-  (let [distance (rand-range min-distance max-distance)
-        angle (rand-int 360)]
-    [:pen :up
-     :right angle
-     :fwd distance
+  []
+  (let [x (rand-int max-width)
+        y (rand-int max-height)]
+    [:origin
+     :pen :up
+     :fwd y
+     :right 90
+     :fwd x
      :pen :down]))
 
 (defn combo1
@@ -27,11 +32,11 @@
   (concat
    [:right (rand-int 360)]
    (rand-flake flake/flake)
-   (goto-random 1000 2500)
-   (flake/simple-flake (rand-range 100 200))
-   (goto-random 1200 2000)
+   (goto-random)
+   (flake/simple-flake (rand-range 50 200))
+   (goto-random)
    (rand-flake flake/complex-flake)
-   (goto-random 2200 3500)))
+   (goto-random)))
 
 (defn simple-flakes
   []
@@ -52,14 +57,14 @@
   (concat
    [:color :blue]
    (->> combo2
-        (repeatedly 13)
+        (repeatedly 15)
         (apply concat))))
 
 (def canvas (js/document.getElementById "canvas"))
 
 (def ctx (.getContext canvas "2d"))
 
-(set! (.-width canvas) 3000)
-(set! (.-height canvas) 2000)
+(set! (.-width canvas) max-width)
+(set! (.-height canvas) max-height)
 
-(draw! (->canvas ctx) (flake/simple-flake 100))
+(draw! (->canvas ctx) (scenery))
