@@ -1,0 +1,33 @@
+body {
+  background: #111;
+  color: #f22;
+  font-family: 'Open Sans', sans-serif;
+}
+
+a {
+  color: #88f;
+}
+
+header {
+  opacity: 0.5;
+  z-index: 10;
+  position: fixed;
+  top: 40%;
+  left: 35%;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3.5em;
+  font-family: 'Sigmar One', sans-serif;
+}
+
+h1 img {
+  width: 0.8em;
+}
+
+#canvas {
+  
+  width: 100%;
+  z-index: 0;
+}
